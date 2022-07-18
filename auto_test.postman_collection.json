@@ -1,0 +1,1550 @@
+{
+	"info": {
+		"_postman_id": "57aef56f-240f-4a14-a3c4-388f3dd09149",
+		"name": "jabba git",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17791763"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "/v1/api/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Вытащить token доступа\r",
+									"pm.test(\"Get Auth Token\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"token\", jsondata.access.hash)});\r",
+									"\r",
+									"//Вытащить refresh токен\r",
+									"pm.test(\"Get Refresh Token\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"token_ref\", jsondata.refresh.hash)});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/api/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/api/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Вытащить token доступа\r",
+									"pm.test(\"Get Auth Token\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"token\", jsondata.access.hash)});\r",
+									"\r",
+									"//Вытащить refresh токен\r",
+									"pm.test(\"Get Refresh Token\", function () {\r",
+									"    var jsondata = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"token_ref\", jsondata.refresh.hash)});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token_hash\": \"{{token_ref}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/refresh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/api/isvalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка полного ответа json\r",
+									"pm.test(\"Body matches string\", function () \r",
+									"    {pm.expect(pm.response.text()).includes('\"result\":0,\"result_descr\":\"OK\"')});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token_hash\": \"{{token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/isvalid",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"isvalid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/api/password/change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка полного ответа json\r",
+									"pm.test(\"Body matches string\", function () \r",
+									"    {pm.expect(pm.response.text()).includes('\"result\":0,\"result_descr\":\"OK\"')});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newpass\":\"123456789\",\r\n    \"oldpass\":\"123456789\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/password/change",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"password",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/api/request/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"// Проверка ответа json\r",
+									"pm.test(\"Body matches string\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json[0].iin).equal(\"111111111111\")});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"product_code\": \"30039\",\r\n    \"signed_xml\": \"123\",\r\n    \"consent_confirmed\": true\r\n  },\r\n  {\r\n    \"product_code\": \"30039\",\r\n    \"signed_xml\": \"123\",\r\n    \"consent_confirmed\": true\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/request/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"request",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/api/report/get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка переменной из Globals c первой переменной в массиве ответа  \r",
+									"pm.test(\"types equal test\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const globalType = pm.globals.get(\"iin\")\r",
+									"    pm.expect(globalType).equal(json[0].iin)});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": 268,\r\n    \"iin\": \"{{iin}}\"\r\n  },\r\n  {\r\n    \"id\": 266,\r\n    \"iin\": \"111111111111\"\r\n  },\r\n  {\r\n    \"id\": 270,\r\n    \"iin\": \"111111111111\"\r\n  },\r\n  {\r\n    \"id\": 271,\r\n    \"iin\": \"111111111111\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/api/report/get",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"report",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Методы администратора",
+			"item": [
+				{
+					"name": "/v1/admin/modules/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка части ответа json\r",
+									"pm.test(\"Body matches string\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json[0].id).equal(1)});\r",
+									"\r",
+									"//Проверка части ответа json\r",
+									"pm.test(\"Body matches string\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json[0].products).to.deep.equal([\"test \",\"test_2\",\"test_3\"])});\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get Auth id\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"id\",jsondata[5].id)});\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get name_ru\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"name_ru\",jsondata[5].name_ru)});\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get products\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"products\",jsondata[5].products)});   "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/admin/modules/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"modules",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/admin/modules/get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка части ответа json\r",
+									"pm.test(\"Body check\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json.id).equal(11)});\r",
+									"\r",
+									"//Проверка части ответ json\r",
+									"pm.test(\"Body check\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json.name_ru).equal(\"тест\")});\r",
+									"\r",
+									"//Проверка части ответ json\r",
+									"pm.test(\"Body check\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json.products).to.deep.equal([\"test_3\"])});\r",
+									"    \r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check id collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = parseInt(pm.collectionVariables.get(\"id\"))\r",
+									"    pm.expect(collevaritype).equal(json.id)});\r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check name_ru collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = pm.collectionVariables.get(\"name_ru\")\r",
+									"    pm.expect(collevaritype).equal(json.name_ru)});   \r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check products collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = pm.collectionVariables.get(\"products\")\r",
+									"    pm.expect(collevaritype).to.deep.equal(json.products)}); \r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get json\", function ()\r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"json\",JSON.stringify(jsondata))});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/admin/modules/get?id={{id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"modules",
+								"get"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/admin/modules/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{json}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/admin/modules/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"modules",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/admin/products/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"\r",
+									"//Проверка части ответа json\r",
+									"pm.test(\"Body check\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json[0].name_ru).equal(\"test\")});\r",
+									"\r",
+									"//Проверка части ответа json\r",
+									"pm.test(\"Body check\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json[0].tariffs[0].price).equal(500)});\r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check code\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+									"    pm.expect(collevaritype).equal(json[0].tariffs[0].price)});\r",
+									"\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get id\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"id\",jsondata[0].id)});\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get name_ru\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"name_ru\",jsondata[0].name_ru)});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/admin/products/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"products",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/admin/products/get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});\r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check code collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = parseInt(pm.collectionVariables.get(\"id\"))\r",
+									"    pm.expect(collevaritype).equal(json.id)});\r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check name_ru collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = (pm.collectionVariables.get(\"name_ru\"))\r",
+									"    pm.expect(collevaritype).equal(json.name_ru)});\r",
+									"\r",
+									"//Проверка переменной из коллекции \r",
+									"pm.test(\"Check price collection\", function () \r",
+									"    {const json = pm.response.json()\r",
+									"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+									"    pm.expect(collevaritype).equal(json.tariffs[0].price)});\r",
+									"\r",
+									"// Проверка части ответа json\r",
+									"pm.test(\"Body check name_ru\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json.name_ru).equal(\"test\")});\r",
+									"\r",
+									"// Проверка части ответа json\r",
+									"pm.test(\"Body check price\", () => \r",
+									"    {const json = pm.response.json()\r",
+									"    pm.expect(json.tariffs[0].price).equal(500)});\r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get json\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"json\",JSON.stringify(jsondata))});   \r",
+									"\r",
+									"//Вытащить первую переменную с первого [0] списка в массиве\r",
+									"pm.test(\"Get json tariffs\", function () \r",
+									"    {var jsondata = pm.response.json()\r",
+									"    pm.collectionVariables.set(\"tariffs\",JSON.stringify(jsondata.tariffs))});  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/admin/products/get?id={{id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"products",
+								"get"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v1/admin/products/save",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Проверка на status 200\r",
+									"pm.test(\"Status code is 200\", function () \r",
+									"    {pm.response.to.have.status(200)});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{json}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/admin/products/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"admin",
+								"products",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/v1/index/getPackages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							"\r",
+							"// Проверка ответа json\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json[0].name).equal(\"test\")});\r",
+							"\r",
+							"//Проверка части ответа json\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json[0].id).equal(1)});\r",
+							"\r",
+							"// Проверка переменной из коллекции \r",
+							"pm.test(\"Check name_ru collection\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = (pm.collectionVariables.get(\"name_ru\"))\r",
+							"    pm.expect(collevaritype).equal(json[0].name)});\r",
+							"\r",
+							"//Проверка переменной из коллекции \r",
+							"pm.test(\"Check price collection\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+							"    pm.expect(collevaritype).equal(json[0].tariffs[0].price)});\r",
+							"\r",
+							"//Проверка переменной из коллекции \r",
+							"pm.test(\"Check id collection\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"id\"))\r",
+							"    pm.expect(collevaritype).equal(json[0].id)});   \r",
+							"    \r",
+							"  //Проверка переменной из коллекции \r",
+							"pm.test(\"Check id collection\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"id\"))\r",
+							"    pm.expect(collevaritype).equal(json[0].modules[0].id)});   \r",
+							"       \r",
+							"// Вытащить первую переменную\r",
+							"pm.test(\"Get code\", function () \r",
+							"    {var jsondata = pm.response.json()\r",
+							"    pm.collectionVariables.set(\"code\", jsondata[0].tariffs[0].code)});     "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/index/getPackages?locale=RU",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"index",
+						"getPackages"
+					],
+					"query": [
+						{
+							"key": "locale",
+							"value": "RU"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/index/getProductCodes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							"\r",
+							"  //Проверка переменной из коллекции \r",
+							"pm.test(\"Check id collection\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = (pm.collectionVariables.get(\"code\"))\r",
+							"    pm.expect(collevaritype).equal(json[0])});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/index/getProductCodes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"index",
+						"getProductCodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/index/getProductPriceAndName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							"\r",
+							"//Проверка части ответа json\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.name).equal(\"test\")});\r",
+							"\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.price).equal(500)});\r",
+							"\r",
+							"// Проверка переменной из коллекции \r",
+							"pm.test(\"Check code\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+							"    pm.expect(collevaritype).equal(json.price)});\r",
+							"\r",
+							"pm.test(\"Check code\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = (pm.collectionVariables.get(\"name_ru\"))\r",
+							"    pm.expect(collevaritype).equal(json.name)});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/index/getProductPriceAndName?productCode={{code}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"index",
+						"getProductPriceAndName"
+					],
+					"query": [
+						{
+							"key": "productCode",
+							"value": "{{code}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/historyByUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							"\r",
+							"// Проверка ответа json\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].requested_fio).equal(\"ФИО\")});\r",
+							"\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].company_bin).equal(\"1234567890\")});\r",
+							"\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].product_code).equal(\"test\")});    \r",
+							"\r",
+							"\r",
+							"// Проверка переменной из коллекции \r",
+							"pm.test(\"Check name_ru\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = (pm.collectionVariables.get(\"name_ru\"))\r",
+							"    pm.expect(collevaritype).equal(json.items[0].product_code)});\r",
+							"\r",
+							"pm.test(\"Check price\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+							"    pm.expect(collevaritype).equal(json.items[0].price)});\r",
+							"\r",
+							"pm.test(\"Check price\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const globalType = (pm.globals.get(\"bin3\"))\r",
+							"    pm.expect(globalType).equal(json.items[0].company_bin)});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"BIN\":\"{{bin3}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/report/historyByUser",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"historyByUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/historyByCompany",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							"\r",
+							"// Проверка ответа json\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].requested_fio).equal(\"ФИО\")});\r",
+							"\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].company_bin).equal(\"1234567890\")});\r",
+							"\r",
+							"pm.test(\"Body check\", () => \r",
+							"    {const json = pm.response.json()\r",
+							"    pm.expect(json.items[0].product_code).equal(\"test\")});    \r",
+							"\r",
+							"\r",
+							"// Проверка переменной из коллекции \r",
+							"pm.test(\"Check name_ru\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = (pm.collectionVariables.get(\"name_ru\"))\r",
+							"    pm.expect(collevaritype).equal(json.items[0].product_code)});\r",
+							"\r",
+							"pm.test(\"Check price\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const collevaritype = parseInt(pm.collectionVariables.get(\"price\"))\r",
+							"    pm.expect(collevaritype).equal(json.items[0].price)});\r",
+							"\r",
+							"pm.test(\"Check price\", function () \r",
+							"    {const json = pm.response.json()\r",
+							"    const globalType = (pm.globals.get(\"bin3\"))\r",
+							"    pm.expect(globalType).equal(json.items[0].company_bin)});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"BIN\":\"{{bin3}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/report/historyByCompany?offset=10",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"historyByCompany"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/prepareXML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"iin\": \"111111111111\",\r\n  \"bin\": \"1234567890\",\r\n  \"product_code\": \"30039\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/report/prepareXML",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"prepareXML"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/createRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Authorization",
+						"value": "Basic 11111111111111111111111111111111111111111111",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"signed_xml\": \"123\",\r\n  \"product_code\": \"30041\",\r\n  \"fio\": \"фио\",\r\n  \"userid\":2251\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/report/createRequest",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"createRequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/createRequestByUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"signed_xml\": \"123\",\r\n  \"product_code\": \"30039\",\r\n  \"fio\": \"фио\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/report/createRequestByUser",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"createRequestByUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/report/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/v1/report/get?requestId=149",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"report",
+						"get"
+					],
+					"query": [
+						{
+							"key": "requestId",
+							"value": "149"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/v1/epc/callback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/epc/callback?requestId=8",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"epc",
+						"callback"
+					],
+					"query": [
+						{
+							"key": "requestId",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/healthz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Проверка на status 200\r",
+							"pm.test(\"Status code is 200\", function () \r",
+							"    {pm.response.to.have.status(200)});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/healthz",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"healthz"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"//Переключение host",
+					"//Внутренние адреса",
+					"if(pm.globals.get(\"host_type\") === \"prod\")",
+					"    {pm.environment.set(\"host\", \"{{host_prod}}\");}",
+					"if(pm.globals.get(\"host_type\") === \"staging\")",
+					"    {pm.environment.set(\"host\", \"{{host_staging}}\");}",
+					"if(pm.globals.get(\"host_type\") === \"test\")",
+					"    {pm.environment.set(\"host\", \"{{host_test}}\");}",
+					"//Внешние адреса",
+					"if(pm.globals.get(\"host_type\") === \"test2\")",
+					"    {pm.environment.set(\"host\", \"{{host_test2}}\");}",
+					"if(pm.globals.get(\"host_type\") === \"secure2\")",
+					"    {pm.environment.set(\"host\", \"{{host_secure2}}\");}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "--- Адреса ---",
+			"value": "--- Адреса ---",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "host",
+			"value": "{{host_type}}",
+			"type": "string"
+		},
+		{
+			"key": "host_staging",
+			"value": "https://123.kz",
+			"type": "string"
+		},
+		{
+			"key": "host_test",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "host_prod",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "host_test2",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "host_secure2",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "--- Авторизация ---",
+			"value": "--- Авторизация ---",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "login",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "123456789",
+			"type": "string"
+		},
+		{
+			"key": "user_cred",
+			"value": "Basic qwe123",
+			"type": "string"
+		},
+		{
+			"key": "user_cred-",
+			"value": "Basic qwe123",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token_ref",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_cred",
+			"value": "Basic qwe123",
+			"type": "string"
+		},
+		{
+			"key": "token_adm",
+			"value": ""
+		},
+		{
+			"key": "token_adm_ref",
+			"value": ""
+		},
+		{
+			"key": "--- collectionVariables ---",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "json",
+			"value": ""
+		},
+		{
+			"key": "price",
+			"value": "500",
+			"type": "string"
+		},
+		{
+			"key": "name_ru",
+			"value": ""
+		},
+		{
+			"key": "tariffs",
+			"value": ""
+		},
+		{
+			"key": "products",
+			"value": ""
+		},
+		{
+			"key": "code",
+			"value": ""
+		}
+	]
+}
